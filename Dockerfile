@@ -53,9 +53,15 @@ RUN echo "building...."
 RUN bazel version
 RUN bazel clean --expunge
 RUN bazel --version
-RUN bazel build --config=opt -c opt --noincompatible_do_not_split_linking_cmdline --local_ram_resources=1950000 --local_cpu_resources=126 --jobs 126 --verbose_failures //tensorflow/tools/pip_package:build_pip_package
+RUN bazel build --config=opt --local_ram_resources=249000 --local_cpu_resources=32 --jobs 32 --verbose_failures //tensorflow/tools/pip_package:build_pip_package  
+
+# Build the wheel
+RUN apt install -y libhdf5-dev
+RUN apt install -y pkg-config
+RUN pip3 install h5py
+RUN bash bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensor/
+
 
 COPY uploadAssetsToS3.py uploadAssetsToS3.py 
-
 
 CMD python3 uploadAssetsToS3.py 

@@ -1,4 +1,4 @@
-using bazel 3.7.1 compiled on a windows machine (x86) 
+using bazel 3.1.0 compiled on a AWS 32 vCPU (minimum) machine (arm64) 
 Known issue:
 ```
 ------
@@ -16,3 +16,8 @@ then build with:
 ```
 docker buildx build --platform linux/arm64 -t tensor .
 ```
+
+# Needed dependencies for Tensorflow
+pip install numpy --upgrade
+
+best hardware to compile on ~32 cores, ~48 GB RAM, 20Gb storage.

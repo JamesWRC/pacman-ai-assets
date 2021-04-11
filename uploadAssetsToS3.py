@@ -24,26 +24,4 @@ def upload_to_aws(local_file, bucket, s3_file):
         return False
 
 
-import zipfile
-    
-def zipdir(path, ziph):
-    # ziph is zipfile handle
-    for root, dirs, files in os.walk(path):
-        for file in files:
-            ziph.write(os.path.join(root, file), 
-                       os.path.relpath(os.path.join(root, file), 
-                                       os.path.join(path, '..')))
-      
-
-
-#testing
-
-os.chdir('/bazel_3_1_0/tensorflow')
-
-
-
-zipf = zipfile.ZipFile('tensor.zip', 'w', zipfile.ZIP_DEFLATED)
-zipdir('.', zipf)
-zipf.close()
-
-uploaded = upload_to_aws('tensor.zip', 'pacman-ai-assets', 'tensor-assets.zip')
+uploaded = upload_to_aws('/tmp/tensor/tensorflow-2.4.1-cp38-cp38-linux_aarch64.whl', 'pacman-ai-assets', 'tensorflow-2.4.1-cp38-cp38-linux_aarch64.whl')
